@@ -1,31 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{{ page.title }}</title>
-        <!-- link to main stylesheet -->
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
-    </head>
-    <body>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about.html">About</a></li>
-                <li><a href="/seaglass.html">Why Sea Glass?</a></li>
-                <li><a href="/resume.html">Resume</a></li>
-                <li><a href="/writing.html">Articles, Papers, etc.</a></li>
-                <li><a href="/postfix/">Postfix</a></li>
-            </ul>
-        </nav>
-        <div class="container">
+<head>
+  <title>{{ page.title }}</title>
+  <!-- link to main stylesheet -->
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+</head>
 
-        {{ content }}
+<body>
+<div class="topnav">
+<nav>
+Kyle Dent Personal Website
+<ul>
+  <li><a href="/">Home</a></li>
+  <li><a href="/writing.html">Writing</a></li>
+  <li><a href="/postfix/">Postfix</a></li>
+  <li><a href="/resume.html">Resume</a></li>
+  <li><a href="/about.html">About</a></li>
+  <li><a href="/seaglass.html">Why Sea Glass?</a></li>
+</ul>
+</nav>
+</div>
 
-        </div><!-- /.container -->
-        <footer>
-            <ul>
-                <li><a href="mailto:&#107;&#100;&#101;&#110;&#116;&#64;&#115;&#101;&#97;&#103;&#108;&#97;&#115;&#115;&#46;&#99;&#111;&#109;">&#107;&#100;&#101;&#110;&#116;&#64;&#115;&#101;&#97;&#103;&#108;&#97;&#115;&#115;&#46;&#99;&#111;&#109;</a></li>
-                <li><a href="https://github.com/kdent"><img src="images/github_icon.jpg" alt="Github Link"></a></li>
-            </ul>
-        </footer>
-    </body>
+<div class="container">
+{{ content }}
+</div><!-- /.container -->
+
+<footer>
+
+<ul>
+<li><a href="mailto:&#107;&#100;&#101;&#110;&#116;&#64;&#115;&#101;&#97;&#103;&#108;&#97;&#115;&#115;&#46;&#99;&#111;&#109;"><img src="/images/email_icon.svg" alt="Email link" height="32"></a></li>
+
+<li><a href="https://www.twitter.com/kdent"><img src="/images/Twitter_Logo_Blue-150x150.png" height="32"
+alt="Twitter Link"></a>
+
+<li><a href="https://github.com/kdent"><img src="/images/github_icon.jpg" height="32" alt="Github Link"></a></li>
+
+<li><a href="https://www.linkedin.com/in/kyleddent/"><img 
+src="/images/In-2C-54px-R.png" alt="LinkedIn Link" height="32"></a>
+
+</ul>
+
+</footer>
+</body>
 </html>
