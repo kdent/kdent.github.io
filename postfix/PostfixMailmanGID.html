@@ -48,15 +48,15 @@ examples above, you should execute <code>configure</code> using
 60003 for the GID option.
 </p><pre>$ ./configure --with-mail-gid=60003
 </pre>
+<p>
 You may have additional options for <code>configure</code>
 according to your environment. Be sure to read the Mailman
 documentation for building the package.  If you have already built
 your Mailman package and you did not specify the group, build it
 again. If you didn't build your Mailman package, see the sidebar in
 this chapter.
-<p></p>
+</p>
 
-<div class="sidebar">
 <h3 style="text-align: center">WANTED gid 12 GOT gid 99?</h3>
 <p>
 If you didn't build the Mailman package yourself (and don't have the
@@ -67,11 +67,12 @@ process and the group that Mailman expects, you will receive a bounce
 error message after you send an email message to a Mailman list.
 Mailman also logs the error, which will look something like the
 following:
+</p>
 
-</p><pre>Failure to exec script. WANTED gid 12 GOT
-                gid 99 (Reconfigure to take 99?)
+<pre>
+Failure to exec script. WANTED gid 12 GOT
+gid 99 (Reconfigure to take 99?)
 </pre>
-<p></p>
 
 <p>
 In order to get Postfix to deliver the message to Mailman using the
@@ -100,5 +101,4 @@ of the <code>mailman</code> account to that group. Make sure
 that the Mailman alias file is owned by the <code>mailman</code>
 account.
 </p>
-</div>
 
