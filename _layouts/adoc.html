@@ -2,7 +2,7 @@
 <html>
 <head>
   {% if jekyll.environment == 'production' %}
-  {% include analytics.html %}
+  {% include google_analytics_head.html %}
   {% endif %}
 
   <title>{{ page.title }}</title>
@@ -13,6 +13,9 @@
 </head>
 
 <body class="article">
+  {% if jekyll.environment == 'production' %}
+  {% include google_analytics_body.html %}
+  {% endif %}
 <div class="topnav">
 <nav>
 <div align="right" style="font-weight:bold;padding-right:18px">Kyle Dent Personal Website</div>
