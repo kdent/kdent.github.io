@@ -18,10 +18,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      name: Deploy
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Create pages
+      run: make
+
+    - name: Commit new page
+
+
+    - name: Deploy
       uses: actions/deploy-pages@v4
-      if: github.ref == 'refs/heads/master'
-      with:
       github_token: ${{ secrets.GITHUB_TOKEN }}
       publish_dir: ./_site  # <-- Deploy the '_site' folder
 
