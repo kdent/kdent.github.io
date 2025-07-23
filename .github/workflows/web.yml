@@ -11,9 +11,6 @@ permissions:
   pages: write
   id-token: write
 
-defaults:
-  shell: bash
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
