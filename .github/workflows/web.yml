@@ -6,15 +6,22 @@ on:
       - master
   pull_request:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+defaults:
+  shell: bash
+
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site  # <-- Deploy the '_site' folder
+      name: Deploy
+      uses: actions/deploy-pages@v4
+      if: github.ref == 'refs/heads/master'
+      with:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+      publish_dir: ./_site  # <-- Deploy the '_site' folder
 
