@@ -78,7 +78,7 @@ def expand_file(filename):
         else:
             if "layout" not in attrs:
                 sys.stderr.write(f"no layout attribute in {filename}, generating raw file\n")
-                out_fh.write("".join(contents))
+                out_fh.write("".join(in_fh.read()))
                 break
             layout_file = os.path.join("_layouts", attrs['layout'] + ".html")
             with open(layout_file) as layout_in:
