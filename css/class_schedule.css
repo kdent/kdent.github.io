@@ -1,0 +1,29 @@
+
+h1 {
+    font-size: 32pt;
+    color: #f55e61;
+    text-align: center;
+    margin: 5%;
+}
+
+h3 {
+    font-size: 18pt;
+    color: #5e696c;
+    margin-bottom: -8px;
+    margin-top: -4px;
+}
+
+body {
+    margin-left: 3%;
+    margin-right: 3%;
+    font-family: Georgia;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+.day-sched {
+    margin-left: 2%;
+}
+
