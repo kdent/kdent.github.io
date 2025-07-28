@@ -1,0 +1,25 @@
+
+body {
+    font-family: verdana;
+    margin: 2% 10% 2% 10%;
+    line-height: 150%;
+}
+
+h1 {
+    font-size: 18pt;
+    color: navy;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+code, pre {
+    font-size: 115%;
+    background: #efefef;
+}
+
+pre {
+    padding: 8px;
+    overflow-y: auto;
+}

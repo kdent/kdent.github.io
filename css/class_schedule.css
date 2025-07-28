@@ -1,0 +1,46 @@
+
+h1 {
+    font-size: 32pt;
+    line-height: 120%;
+    color: #f55e61;
+    text-align: center;
+    margin: 5%;
+}
+
+h3 {
+    font-size: 18pt;
+    color: #5e696c;
+    margin-bottom: -8px;
+    margin-top: -4px;
+}
+
+h1,h2,h3 {
+    font-family: Georgia;
+}
+
+body {
+  line-height: 1.5;
+  margin-left: 3%;
+  margin-right: 3%;
+/* Inter font from Google */
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
+
+li {
+    margin-bottom: 0px;
+}
+
+.day-sched {
+    margin-left: 2%;
+}
+
+
+.inter-<uniquifier> {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
