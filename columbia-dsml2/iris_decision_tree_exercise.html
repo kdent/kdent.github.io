@@ -1,57 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Decision Tree Exercise - Iris Dataset</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 40px;
-            max-width: 900px;
-        }
+---
+layout: class_assignment
+title: Assignment: Prepare Your Development Environment
+---
 
-        h1, h2 {
-            color: #333;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 20px 0;
-        }
-
-        th, td {
-            border: 1px solid #999;
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #eee;
-        }
-
-        .tree {
-            background-color: #f7f7f7;
-            border: 1px solid #ccc;
-            padding: 15px;
-            font-family: monospace;
-            white-space: pre;
-            margin: 20px 0;
-        }
-
-        .question {
-            background-color: #f0f8ff;
-            padding: 15px;
-            border-left: 4px solid #4682b4;
-            margin: 20px 0;
-        }
-    </style>
-</head>
-
-<body>
-
-<h1>Exercise: Build a Decision Tree by Hand — Iris Dataset</h1>
+<h1>Exercise: Build a Decision Tree by Hand &mdash; Iris Dataset</h1>
 
 <p>
 The iris dataset contains measurements of three types of iris flowers:
@@ -167,9 +119,9 @@ Choose a feature and a cutoff value that separates one class from the others.
 <p>Examples:</p>
 
 <ul>
-    <li>Is petal length ≤ 2.5 cm?</li>
-    <li>Is petal width ≤ 0.8 cm?</li>
-    <li>Is sepal length ≤ 5.5 cm?</li>
+    <li>Is petal length &le; 2.5 cm?</li>
+    <li>Is petal width &le; 0.8 cm?</li>
+    <li>Is sepal length &le; 5.5 cm?</li>
 </ul>
 
 <p>
@@ -182,7 +134,7 @@ Find a rule that puts as many flowers of one class as possible into one branch.
 
 
 <div class="tree">
-             Petal length ≤ 2.5?
+             Petal length &le; 2.5?
                  /        \
               Yes          No
               ?             ?
@@ -205,7 +157,7 @@ For each branch, decide:
 <p>Example:</p>
 
 <div class="tree">
-             Petal length ≤ 2.5?
+             Petal length &le; 2.5?
                  /        \
               Yes          No
            Setosa       Continue
@@ -221,10 +173,10 @@ Try adding another question to separate the remaining flowers.
 <p>Example:</p>
 
 <div class="tree">
-             Petal length ≤ 2.5?
+             Petal length &le; 2.5?
                  /        \
               Yes          No
-           Setosa       Petal width ≤ 1.7?
+           Setosa       Petal width &le; 1.7?
                               /       \
                          Versicolor  Virginica
 </div>
