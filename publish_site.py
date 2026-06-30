@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #
 # Script to combine web page templates with content pages for publishing to
 # Github pages. This first pass is rough and should be updated to allow for
