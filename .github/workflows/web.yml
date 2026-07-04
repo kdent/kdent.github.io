@@ -24,9 +24,6 @@ jobs:
     - name: Create pages
       run: make
 
-    - name: Commit new page
-
-
     - name: Deploy
       uses: actions/deploy-pages@v4
       github_token: ${{ secrets.GITHUB_TOKEN }}
