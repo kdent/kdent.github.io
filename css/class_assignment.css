@@ -10,18 +10,21 @@ h1 {
     color: navy;
 }
 
-li {
+ol li, ul li {
     margin-bottom: 10px;
 }
 
-code, pre {
-    font-size: 115%;
-    background: #efefef;
+code {
+    background-color: #eee;
+    padding: 2px 5px;
+    border-radius: 3px;
 }
 
 pre {
-    padding: 8px;
-    overflow-y: auto;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    padding: 15px;
+    overflow-x: auto;
 }
 
 .tree {
@@ -39,3 +42,11 @@ pre {
     border-left: 4px solid #4682b4;
     margin: 20px 0;
 }
+
+.box {
+    background-color: #f5f5f5;
+    border-left: 5px solid #4682b4;
+    padding: 15px;
+    margin: 20px 0;
+}
+
