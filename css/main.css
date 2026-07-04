@@ -78,3 +78,11 @@ pre {
     margin-left: 3em;
     font-size: 1.5em
 }
+
+span.smallcaps{
+    font-variant: small-caps;
+}
+
+span.underline{
+    text-decoration: underline;
+}

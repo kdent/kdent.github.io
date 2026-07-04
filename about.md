@@ -7,9 +7,16 @@ title: Kyle Dent Personal Website - About
 
 <h2>Current</h2>
 <p>
-Currently, I manage a research group at the <a href="http://www.parc.com/">Palo
-Alto Research Center</a> (PARC, formerly Xerox PARC) called the Machine
-Learning and Data Science group in the Interactions and Analytics Lab (IAL). I
+Currently, I am the Research Director of AI at PARC. As a research director, I
+track a portfolio of projects from early-stage to mature technologies to decide
+which efforts make sense for investment. I have to stay up-to-date with the
+latest and likely future trends in AI and ML. I am also the co-founder and
+co-chair of the AI Ethics Committee at PARC.
+</p>
+
+<p>
+Before my current position, I managed a research group called the Machine
+Learning and Data Science area in the Interactions and Analytics Lab (IAL). I
 first started as a Member of Research Staff in the Knowledge, Language, and
 Interaction area, where we worked on improving humans' relationship with the
 voluminous quantities of information available not only in the world at large
@@ -19,7 +26,7 @@ analysis, and visualization to help humans find and understand the information
 relevant to them at a given point in time and within a particular context.
 </p>
 
-<h2>More Detail Than You Care About</h2>
+<h2>Prior Work and the Early (Commercial) Internet</h2>
 <p>
 If you're curious about my experience during the early days of the commercial
 internet, you can read on for much more information than you ever wanted to
