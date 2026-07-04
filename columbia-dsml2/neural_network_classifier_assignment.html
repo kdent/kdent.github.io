@@ -1,0 +1,40 @@
+---
+layout: class_assignment
+title: Neural Network Classifier
+---
+
+<h1>Building a Neural Network Classifier</h1>
+
+In this assignment you will try out your new skills with creating classifiers based on neural networks. You'll use Keras's API to create a model that can make predictions on the Handwritten Digit dataset.
+
+<hr>
+
+Create a new notebook for this lab and import the Numpy and Tensorflow
+libraries.
+
+<ol>
+<li>
+Load the MNIST data included with the Keras library: <code>(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()</code>.
+</li>
+
+<li>
+Optional: If you would like to see the data, use Matplotlib's <code>imshow()</code> function to display one or more images from the dataset.
+</li>
+
+<li>
+Divide your data into train, test, and validation sets
+</li>
+
+<li>
+Using the Keras API, design and build a neural network capable of classifying digits. You can decide what layers to include as well as what loss and optimization functions to use. You also have to decide how many epochs to use for training. You should include your validation data in your model, so that you can plot the training over epochs. Note that this data set is simpler than either the Fashion MNIST data or the CIFOR image data, so you should design your network accordingly.
+
+</li>
+
+<li>
+Note the final loss and accuracy values for your model after training.
+</li>
+
+<li>
+Plot the loss and accuracy curves over training epochs for both training and validation.
+</li>
+</ol>
