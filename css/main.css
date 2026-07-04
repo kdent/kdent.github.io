@@ -11,6 +11,7 @@ nav ul, footer ul {
 nav ul li, footer ul li {
     display: inline;
     margin-right: 20px;
+    font-size: 12pt;
 }
 a {
     text-decoration: none;
@@ -23,7 +24,7 @@ h1 {
     font-size: 3em;
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
 }
-p {
+p, li {
     font-size: 1.5em;
     line-height: 1.4em;
     color: #333;
@@ -44,4 +45,14 @@ ul.posts li {
 
 .question {
     font-weight: bold;
+}
+
+.answer {
+    margin-left: 0.5em;
+    margin-right: 1em;
+}
+
+pre {
+    margin-left: 3em;
+    font-size: 1.5em
 }
