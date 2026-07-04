@@ -71,7 +71,7 @@ def expand_file(filename):
 
         if processing_header:
             line = line.rstrip('\n')
-            attr_name, attr_val = line.split(':', 2)
+            attr_name, attr_val = line.split(':', 1)
             attr_name = attr_name.strip()
             attr_val = attr_val.strip()
             attrs[attr_name] = attr_val
