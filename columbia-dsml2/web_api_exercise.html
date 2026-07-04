@@ -1,0 +1,188 @@
+---
+layout: class_assignment
+title: Assignment: Prepare Your Development Environment
+---
+
+<h1>Exercise: Using a Web API to Retrieve Museum Data</h1>
+
+<h2>Overview</h2>
+
+<p>
+In this exercise, you will learn how to use a <b>web API</b> to retrieve data from an online source.
+You will connect to the Art Institute of Chicago's public API, download information about artwork in the museum's collection,
+and search the returned data to find a specific artwork.
+</p>
+
+<p>
+This exercise introduces several important data science skills:
+</p>
+
+<ul>
+    <li>Making requests to a web API</li>
+    <li>Working with JSON data</li>
+    <li>Storing data in arrays</li>
+    <li>Looping through data</li>
+    <li>Searching datasets for specific information</li>
+</ul>
+
+
+<h2>Background: What is an API?</h2>
+
+<p>
+An <b>API (Application Programming Interface)</b> allows programs to communicate with other programs
+and retrieve data. Instead of manually downloading a dataset, your program can ask a server for the data it needs.
+</p>
+
+<p>
+The Art Institute of Chicago provides a public API that allows developers to access information about artworks
+in its collection.
+</p>
+
+<p>
+API Documentation:
+<a href="https://api.artic.edu/docs/" target="_blank">
+https://api.artic.edu/docs/
+</a>
+</p>
+
+
+<h2>Your Goal</h2>
+
+<div class="box">
+    Use the Art Institute of Chicago API to retrieve a list of artwork objects.
+    Store the returned objects in an array.
+    Search through the array until you find the artwork titled <b>"Two Itinerant Musicians"</b>.
+    Print the JSON information for that artwork.
+</div>
+
+
+<h2>Step 1: Retrieve Data from the API</h2>
+
+<p>
+Use the following API endpoint:
+</p>
+
+<pre>
+https://api.artic.edu/api/v1/artworks?page=5&amp;limit=100
+</pre>
+
+<p>
+This request asks the API for:
+</p>
+
+<ul>
+    <li>Page 5 of the artwork collection</li>
+    <li>100 artwork records</li>
+</ul>
+
+<p>
+When you access this URL, the API returns data in <b>JSON format</b>.
+</p>
+
+
+<h2>Step 2: Store the Artwork List</h2>
+
+<p>
+The JSON response contains an array of artwork objects.
+Create a variable to store this array.
+</p>
+
+<p>
+Your program should contain code similar to:
+</p>
+
+<pre>
+json_resp = response.json()
+artworks = json_resp["data"]
+</pre>
+
+<p>
+Now your program has a list of artwork objects that it can search through.
+Each item in the list is a dictionary with many attribute about the artwork
+it represents. One of the attributes is the 'title' of the work.
+</p>
+
+
+<h2>Step 3: Search the Array</h2>
+
+<p>
+Traverse the array using a loop.
+For each artwork object:
+</p>
+
+<ol>
+    <li>Look at the artwork title</li>
+    <li>Check whether the title is <code>"Two Itinerant Musicians"</code></li>
+    <li>If you find it, print the complete JSON object</li>
+</ol>
+
+
+<p>
+Your logic should look something like:
+</p>
+
+<pre>
+for artwork in artworks:
+
+    if artwork title is "Two Itinerant Musicians":
+
+        print artwork information
+</pre>
+
+
+<h2>Step 4: Examine the Result</h2>
+
+<p>
+After finding the artwork, examine the JSON output.
+Look for information such as:
+</p>
+
+<ul>
+    <li>Artist</li>
+    <li>Date created</li>
+    <li>Medium</li>
+    <li>Description</li>
+    <li>Artwork ID</li>
+</ul>
+
+
+<h2>Challenge Questions</h2>
+
+<ol>
+    <li>
+        How many artwork objects did the API return?
+    </li>
+
+    <li>
+        What information about the artwork would be useful for a museum search application?
+    </li>
+
+    <li>
+        Modify your program so that it searches for a different artwork title.
+    </li>
+
+    <li>
+        Modify your program to print the titles of all artworks in the returned dataset.
+    </li>
+</ol>
+
+
+<h2>Extension: Connect to Data Science</h2>
+
+<p>
+Large datasets are often accessed through APIs. The same skills you practiced here are used when collecting data
+for machine learning projects, dashboards, and data analysis.
+</p>
+
+<p>
+In a real data science workflow:
+</p>
+
+<ul>
+    <li>APIs provide the raw data</li>
+    <li>Programs clean and organize the data</li>
+    <li>Machine learning models analyze patterns in the data</li>
+</ul>
+
+</body>
+</html>
