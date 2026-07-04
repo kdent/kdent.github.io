@@ -12,7 +12,7 @@ import sys
 start_path = os.getcwd()
 output_path = "_site"
 pattern = re.compile('(.*){{\\s*([.\\w]*)\\s*}}(.*)')
-dirs_to_copy = ['css', 'images']
+exclude_files = ['Makefile', 'publish_site.py', 'server.py', 'README.md']
 
 #
 # Checks the current line for template variables and expands them. Variables
@@ -71,7 +71,7 @@ def expand_file(filename):
 
         if processing_header:
             line = line.rstrip('\n')
-            attr_name, attr_val = line.split(':', 2)
+            attr_name, attr_val = line.split(':', 1)
             attr_name = attr_name.strip()
             attr_val = attr_val.strip()
             attrs[attr_name] = attr_val
@@ -88,32 +88,46 @@ def expand_file(filename):
     out_fh.close()
 
 
-def walk_path(start_path):
+def walk_path(cur_path):
 
-    for entry in os.listdir(start_path):
+    for entry in os.listdir(cur_path):
+
+        if entry[0] == "." or entry[0] == "_":
+            continue
+        if entry in exclude_files:
+            continue
 
         # Recurse into directories.
-        if os.path.isdir(entry):
+        if os.path.isdir(os.path.join(cur_path, entry)):
             if entry == "tmp":
-                continue
-            if entry[0] == "." or entry[0] == "_":
                 continue
             else:
                 print(f" recursing into {entry}")
-                walk_path(os.path.join(start_path, entry))
+                target_path = cur_path.replace(start_path, output_path)
+                if not os.path.isdir(target_path):
+                    os.makedirs(target_path)
+                walk_path(os.path.join(cur_path, entry))
 
-        # Process html files.
         else:
             root, extension = os.path.splitext(entry)
+            # Process html files.
             if extension == ".html" or extension == ".htm":
                 print(f"processing {entry}")
-                expand_file(os.path.join(start_path, entry))
+                expand_file(os.path.join(cur_path, entry))
+            else:
+                # Simply copy all other files
+                target_path = cur_path.replace(start_path, output_path)
+                if not os.path.isdir(target_path):
+                    os.makedirs(target_path)
+                target_file = os.path.join(target_path, entry)
+                print("Copying", target_file)
+                shutil.copyfile(os.path.join(cur_path, entry), target_file)
 
 
 if __name__ == "__main__":
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
     walk_path(start_path)
-    for dir_name in dirs_to_copy:
-        shutil.copytree(dir_name, os.path.join(output_path, dir_name), dirs_exist_ok=True)
+#    for dir_name in dirs_to_copy:
+#        shutil.copytree(dir_name, os.path.join(output_path, dir_name), dirs_exist_ok=True)
 

@@ -1,0 +1,174 @@
+---
+layout: class_assignment
+title: Lab: Bar Chart for Hot Dog Eating Contest
+---
+
+<h1>Lab: Bar Chart for Hot Dog Eating Contest</h1>
+
+<p>
+In this lab, you'll use several features from Matplotlib and practice refining a plot incrementally to create a nice professional looking chart.
+</p>
+
+<p style="font-style:italic">
+The assignment is inspired by content from Visualize This: The FlowingData Guide to Design, Visualization, and Statistics, Chapter 4, Nathan Yau, Published by Wiley.
+</p>
+
+<hr>
+
+<p>
+You're going to create a bar chart that depicts discrete temporal data, meaning
+there are single values for an event that occurs every year. Nathan's Annual
+Hot Dog Eating Contest (yes, it actually exists) happens every July 4. The
+event is so popular that it's televised by ESPN.
+</p>
+
+<p>
+During the late 1990s, contestants would typically eat between 10 and 20 hot
+dogs and buns during the competition. The year 2001 saw a big change. Takeru
+Kobayashi, a professional eater from Japan, set a new level to the competition
+by eating 50 hot dogs and buns. He doubled the amount anyone in the world had
+eaten before him. That is the story of this chart.
+</p>
+
+<p>
+The data file <code><a
+href="data/hot-dog-contest-winners.csv">hot-dog-contest-winners.csv</a></code>
+was sourced from Wikipedia and contains the results of the contest for the past
+three and a half decades. Your bar chart should look like the following when
+you are finished.
+</p>
+
+<img src="hotdog-viz.png">
+
+<p>
+Be sure to start a new Colab notebook for this assignment. As always the first lines of your notebook will be importing the Pandas and Matplotlib libraries.
+</p>
+
+<p>
+Pre-step: Download the data file <code><a
+href="data/hot-dog-contest-winners.csv">hot-dog-contest-winners.csv</a></code>
+and upload it to your Google drive. Upload it to your columbia-ml-data
+directory or another place that you can locate from within your Colab notebook
+code.
+</p>
+
+<ol>
+
+<li>
+Using the <code>read_csv()</code> method from Pandas, load the data into a
+Pandas data frame and store it in a variable called <code>hotdogs</code>. Take
+a look at the data using the <code>head()</code> method to get a sense of the
+columns and values. If you like, use the <code>info()</code> method to get more
+details about the data.
+</li>
+
+<li>
+Select the rows for data starting from 1990. In other words, we're going to
+ignore the rows for the years 1980-1989.
+</li>
+
+<li>
+Using the <code>plot()</code> function, create an initial bar chart where the
+<i>x</i> dimension is the 'Year' of each contest and the <i>y</i> dimension is
+the number of 'Dogs eaten' by the winner that year. Recall from class that in
+matplotlib, a figure has some number of axes within it. In this case, there is
+only one. The plot function returns a reference to it. Save the reference, so
+that you can access it later to make adjustments to the chart. For example,
+<code>ax = hotdogs.plot(kind="bar", ...)</code>. Remember to execute
+<code>plt.show()</code> as the last command of your visualization so that Colab
+doesn't display any extraneous artifacts from Matplotlib.
+</li>
+</ol>
+
+<p>
+The default settings from Pandas produce a reasonably good looking chart. But
+let's see if we can improve the presentation.
+</p>
+
+<ol>
+<li>
+Let's make the chart a little bigger to be more visible. Add the "figsize"
+parameter to your plot function and set it to the tuple (10, 6) for a width of
+10 and a height of 6: <code>figsize=(10, 6)</code>.
+</li>
+
+<li>
+Now the bars seem a little thin in proportion to the overall figure, so let's
+adjust those. Set the width to 1, the edgecolor to white, and the linewidth to
+5 by adding the following parameters to your plot function: <code>width=1,
+edgecolor='white', linewidth=5</code>.
+</li>
+
+<li>
+Use the <code>plt.title()</code> method to set the title to "Nathan's Hot Dog
+Eating Contest Results, 1990-2025". Use the <code>plt.xlabel()</code> method to
+set the <i>x</i> axis label to "Year" and the <code>plt.ylabel()</code> method
+to set the <i>y</i> axis label to "Hot dogs and buns eaten".
+</li>
+
+<p>
+Most charts look better without unnecessary lines and markings. Let's remove
+some of the clutter from this chart.
+</p>
+
+<ol>
+<li>
+Since we already labeled the <i>y</i> axis, the legend in the corner of the
+chart is redundant. Remove it using the <code>getlegend()</code> method on the
+<code>ax</code> object you stored in step 3 in the first section:
+<code>ax.get_legend().remove()</code>.
+</li>
+
+<li>
+We'll also clean up the figure by removing unnecessary lines (called spines)
+from the plot. The top and the right spines definitely don't contribute
+anything to the chart. Also the tick marks on the <i>y</i> axis are probably
+enough to indicate the height of the bars without the left spine. Remove these
+lines with the following code:
+<pre>
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['left'].set_visible(False)
+</pre>
+</li>
+
+<li>
+<p>The chart is starting to look quite good at this point. Let's turn our
+attention to the Year labels on the <i>x</i> axis. Matplotlib automatically
+rotates the labels to avoid them overlapping, but let's remove the
+rotation, so that they can be read normally.</p>
+
+<p>Use the <code>xticks()</code> method on the <code>plt</code> object to
+remove the rotation: <code>plt.xticks(rotation=0)</code>.</p>
+</li>
+
+<li>
+You can see that the years are crashing into each other now. We can fix this by
+displaying only every other year. The <code>setxticks_label()</code> allows you
+to change the display of <i>x</i> labels, but you have to pass it all of the
+labels across the <i>x</i> axis. We can get the current list of all <i>x</i>
+labels and make the changes we want by removing every other label and then
+passing our revised list to <code>setxticks_labels()</code>. Use the following
+list comprehension to get the revised list of <i>x</i> labels:
+<pre>
+xlabel_list = [label.get_text() if int(label.get_text()) % 2 == 0 else '' for label in ax.get_xticklabels()]
+</pre>
+</li>
+
+<li>
+Then pass it to the <code>set_xticklabels()</code> method: <code>ax.set_xticklabels(xlabel_list)</code>.
+</li>
+
+<li>
+Finally, we'll add an annotation to draw attention to the major turning point
+in the competition. Use the following command to add text and an arrow pointing
+to the bar for 2001 when professional eaters (apparently that's a thing)
+started competing.
+
+<pre>
+ax.annotate("In 2001, the contest becomes very competitive", xy=(10, 50), xytext=(0, 60), arrowprops=dict(width=0.5, headwidth=3, headlength=4, shrink=0.05, facecolor="black"))
+</pre>
+</li>
+</ol>
+
+<p>The final task of coloring the bars we'll do together in class.</p>
