@@ -1,4 +1,6 @@
 # Sample workflow for building and deploying a Hugo site to GitHub Pages
+# I got most of the contents for this file from
+# https://gohugo.io/host-and-deploy/host-on-github-pages/
 name: Deploy Website to Github Pages
 
 on:

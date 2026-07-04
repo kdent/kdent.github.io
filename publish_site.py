@@ -26,6 +26,7 @@ def write_expanded_line(line, attrs, outfile, content_fh):
         m = pattern.match(line)
         if m:
             if m.group(2) == "content":
+                outfile.write("<!-- marker -->\n")
                 for content in content_fh:
                     outfile.write(content)
             else:
