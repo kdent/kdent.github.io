@@ -1,0 +1,15 @@
+
+body {
+    font-family: verdana;
+    margin: 10%;
+    line-height: 150%;
+}
+
+h1 {
+    font-size: 18pt;
+    color: navy;
+}
+
+li {
+    margin-bottom: 10px;
+}
