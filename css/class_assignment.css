@@ -23,3 +23,19 @@ pre {
     padding: 8px;
     overflow-y: auto;
 }
+
+.tree {
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    padding: 15px;
+    font-family: monospace;
+    white-space: pre;
+    margin: 20px 0;
+}
+
+.question {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-left: 4px solid #4682b4;
+    margin: 20px 0;
+}
