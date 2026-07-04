@@ -1,17 +1,21 @@
 ---
-layout: default
+layout: adoc
 title: Postfix and the Mailman GID
 ---
 
+<div id="header">
 <h1>{{ page.title }}</h1>
-
-<div class="abstract">
-The following article is exerpted from
-<span class="title">Postfix: The Definitive Guide</span>. This is a very
-short section, but it addresses an issue that regularly trips people up.
 </div>
 
-<p class="first">
+<p>
+<div style="font-style: italic;">
+The following article is exerpted from
+<u>Postfix: The Definitive Guide</u>. This is a very
+short section, but it addresses an issue that regularly trips people up.
+</div>
+</p>
+
+<p>
 There is one slightly tricky aspect to get Postfix and Mailman
 working together correctly. Mailman expects to be invoked by a
 process running with a particular group id (GID). The GID it
@@ -23,13 +27,18 @@ system to create both the account and the group. When you are
 finished, you should have an entry in
 <code>/etc/passwd</code> that resembles the following:
 </p>
-<pre>mailman:*:26413:60003:Mailman List Manager:/home/mailman:/bin/sh
-</pre>
+
+<p class="code">
+<code>mailman:*:26413:60003:Mailman List Manager:/home/mailman:/bin/sh</code>
+</p>
 
 <p>
 And an entry in <code>/etc/group</code> like the following:
 </p>
-<pre>mailman:*:60003:</pre>
+
+<p class="code">
+<code>mailman:*:60003:</code>
+</p>
 
 <p>
 Make sure that the account <code>mailman</code> has the group
@@ -46,8 +55,12 @@ where ‘xxx’ is the actual GID for the
 <code>mailman</code> group that you created. According to the
 examples above, you should execute <code>configure</code> using
 60003 for the GID option.
-</p><pre>$ ./configure --with-mail-gid=60003
-</pre>
+</p>
+
+<p>
+<code>$ ./configure --with-mail-gid=60003</code>
+</p>
+
 <p>
 You may have additional options for <code>configure</code>
 according to your environment. Be sure to read the Mailman
@@ -57,7 +70,10 @@ again. If you didn't build your Mailman package, see the sidebar in
 this chapter.
 </p>
 
-<h3 style="text-align: center">WANTED gid 12 GOT gid 99?</h3>
+<p>
+<code>WANTED gid 12 GOT gid 99?</code>
+</p>
+
 <p>
 If you didn't build the Mailman package yourself (and don't have the
 option of rebuilding it), there is no good way to find out which GID
@@ -69,10 +85,9 @@ Mailman also logs the error, which will look something like the
 following:
 </p>
 
-<pre>
-Failure to exec script. WANTED gid 12 GOT
-gid 99 (Reconfigure to take 99?)
-</pre>
+<p><code>
+Failure to exec script. WANTED gid 12 GOT gid 99 (Reconfigure to take 99?)
+</code></p>
 
 <p>
 In order to get Postfix to deliver the message to Mailman using the

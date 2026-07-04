@@ -1,166 +1,151 @@
 ---
 title: Turning Off Body and Header Checks for Internal Users
-layout: default
+layout: adoc
 ---
 
+<div id="header">
 <h1>Turning Off Body and Header Checks for Internal Users</h1>
+</div>
 
 <p>
-Since Postfix body and header checks do not have a way to
-whitelist known good clients or IP addresses, administrators
-generally configure a separate content filter to handle anything
-more complicated than simple checks that they can confidently
-apply to all messages. In many situations, however, you might
-find it helpful to disable body and header checks for internal
-users. Email from the outside is subject to the checks, but
-internal messages do not use up processing and memory resources,
-and you do not risk generating false-positives on messages from
-your own users. This How-To describes one way to bypass header
-and body checks for internal senders using the <tt
-class="literal">receive_override_options</tt> feature that was
-introduced in version 2.1 (and earlier snapshots) of Postfix. If
-you are using a version prior to 2.1, the technique described
-here will not work. This method also requires an additional IP
-address for your Postfix system.
+Since Postfix body and header checks do not have a way to whitelist known good
+clients or IP addresses, administrators generally configure a separate content
+filter to handle anything more complicated than simple checks that they can
+confidently apply to all messages. In many situations, however, you might find
+it helpful to disable body and header checks for internal users. Email from the
+outside is subject to the checks, but internal messages do not use up
+processing and memory resources, and you do not risk generating false-positives
+on messages from your own users.  This How-To describes one way to bypass
+header and body checks for internal senders using the
+<code>receive_override_options</code> feature that was introduced in version 2.1
+(and earlier snapshots) of Postfix. If you are using a version prior to 2.1,
+the technique described here will not work. This method also requires an
+additional IP address for your Postfix system.
 </p>
 
 <p>
-The idea is simple enough. Set up an additional <tt
-class="command">smtpd</tt> instance for your internal users and
-disable body and header checks for that instance only. We will
-also disable body and header checks in the <tt
-class="command">pickup</tt> daemon so that messages submitted
-locally (on the same machine) will bypass content checking as
-well. The second <tt class="command">smtpd</tt> instance listens
-on a separate IP address. You should obtain an IP address from
-your network administrator. If your system has multiple network
-interfaces, then you may already have a second IP address to
-use. If one interface is for an internal subnet, use its IP
-address as the second one. If you don't have two or more network
-cards, configure the second IP address as an alias on your
-single network interface.
+The idea is simple enough. Set up an additional <code>smtpd</code> instance for
+your internal users and disable body and header checks for that instance only.
+We will also disable body and header checks in the <code>pickup</code> daemon
+so that messages submitted locally (on the same machine) will bypass content
+checking as well. The second <code>smtpd</code> instance listens on a separate
+IP address. You should obtain an IP address from your network administrator. If
+your system has multiple network interfaces, then you may already have a second
+IP address to use. If one interface is for an internal subnet, use its IP
+address as the second one. If you don't have two or more network cards,
+configure the second IP address as an alias on your single network interface.
 </p>
 
 <h2>Adding an IP Address</h2>
 <p>
-If you have two interfaces, and you've identified the IP address
-of the one you will use for internal users, you're all set. Skip
-ahead to &quot;Configuring Postfix&quot; below. Otherwise, the
-task of creating IP address aliases differs across various Unix
-platforms. Check your system documentation to see how it is done
-on your operating system. Most Unix platforms use the <tt
-class="command">ifconfig</tt> command. You will probably find
-the information you need in the <tt
-class="command">ifconfig</tt> man page. For example, Linux and
-HP-UX use an index number along with the name of the interface.
-Configuring the second IP address 192.168.100.12 on Linux, looks
-like the following:
+If you have two interfaces, and you've identified the IP address of the one you
+will use for internal users, you're all set. Skip ahead to &ldquo;Configuring
+Postfix&rdquo; below. Otherwise, the task of creating IP address aliases differs
+across various Unix platforms. Check your system documentation to see how it is
+done on your operating system. Most Unix platforms use the
+<code>ifconfig</code> command. You will probably find the information you need
+in the <code>ifconfig</code> man page. For example, Linux and HP-UX use an
+index number along with the name of the interface.  Configuring the second IP
+address 192.168.100.12 on Linux, looks like the following:
 </p>
 
 
-<pre class="screen">
+<p class="code">
+<code>
 # ifconfig eth0:0 192.168.100.12 netmask 255.255.255.0
-</pre>
+</code>
+</p>
 
 <p>
-Other platforms, like FreeBSD and IRIX, use an <tt
-class="command">alias</tt> command along with <tt
-class="command">ifconfig</tt>, for example:
+Other platforms, like FreeBSD and IRIX, use an <code>alias</code> command along
+with <code>ifconfig</code>, for example:
 </p>
 
 
-<pre class="screen">
-# ifconfig ef0 alias 192.168.100.12 netmask 255.255.255.255
-</pre>
+<p class="code">
+<code># ifconfig ef0 alias 192.168.100.12 netmask 255.255.255.255</code>
+</p>
 
 <p>
-You will want to configure your system so that the second IP
-address is automatically set when your system boots up. See your
-system documentation for the best way to do that. Also, if this
-second interface is accessible from the Internet, make sure that
-you configure your firewall so that external systems cannot
-reach it. It's meant to be accesed by your internal users only.
+You will want to configure your system so that the second IP address is
+automatically set when your system boots up. See your system documentation for
+the best way to do that. Also, if this second interface is accessible from the
+Internet, make sure that you configure your firewall so that external systems
+cannot reach it. It's meant to be accesed by your internal users only.
 </p>
 
 <h2>Configuring Postfix</h2>
 <p>
-Now that you have a second IP address, you need to configure
-Postfix to start a second instance of <tt
-class="command">smtpd</tt> to handle requests over that address.
-Before getting to that, however, you need to make sure that your
-primary <tt class="command">smtpd</tt> does not gobble up all of
-the IP addresses before your second instance gets a chance at
-one. You can do that by editing the <tt
-class="literal">inet_interfaces</tt> parameter in your <tt
-class="filename">main.cf</tt> file. The parameter <tt
-class="literal">inet_interfaces</tt> specifies which of your
-interfaces Postfix should listen on, and by default, it's set to
-&quot;all.&quot; You want to set it so that Postfix listens on
-all IP addresses <b>except</b> the one we're configuring for
-bypassing content checks. (We'll get Postfix listening on that
-one next.)
+Now that you have a second IP address, you need to configure Postfix to start a
+second instance of <code>smtpd</code> to handle requests over that address.
+Before getting to that, however, you need to make sure that your primary
+<code>smtpd</code> does not gobble up all of the IP addresses before your
+second instance gets a chance at one. You can do that by editing the
+<code>inet_interfaces</code> parameter in your <code>main.cf</code> file. The
+parameter <code>inet_interfaces</code> specifies which of your interfaces
+Postfix should listen on, and by default, it's set to &lsquo;all&rsquo;. You
+want to set it so that Postfix listens on all IP addresses <b>except</b> the
+one we're configuring for bypassing content checks. (We'll get Postfix
+listening on that one next.)
 </p>
 
 <p>
-Edit <tt class="filename">main.cf</tt> and find or add the <tt
-class="literal">inet_interfaces</tt> parameter. Set it to your
-main IP address (plus any additional IP addresses you may have
-excluding the new one). In this example, the main IP address is
-192.168.100.11, and it is the only IP address the original <tt
-class="command">smtpd</tt> daemon should respond on.
+Edit <code>main.cf</code> and find or add the <code>inet_interfaces</code>
+parameter. Set it to your main IP address (plus any additional IP addresses you
+may have excluding the new one). In this example, the main IP address is
+192.168.100.11, and it is the only IP address the original <code>smtpd</code>
+daemon should respond on.
 </p>
 
-
-<pre class="programlisting">
+<p>
+<pre class="code">
 #
 # main.cf
 #
 inet_interfaces = 192.168.100.11
 </pre>
+</p>
 
 <p>
-Next we'll create a new entry in <tt
-class="filename">master.cf</tt> to add the additional instance
-of <tt class="command">smtpd</tt>. This entry is identified by
-the new IP address plus the <tt class="literal">smtp</tt> port,
-which it should listen on. The entry includes a configuration
-option to turn off body and header checks through the <tt
-class="literal">receive_override_options</tt> parameter:
+Next we'll create a new entry in <code>master.cf</code> to add the additional
+instance of <code>smtpd</code>. This entry is identified by the new IP address
+plus the <code>smtp</code> port, which it should listen on. The entry includes
+a configuration option to turn off body and header checks through the
+<code>receive_override_options</code> parameter:
 </p>
 
 
-<pre class="screen">
+<p>
+<pre class="code">
 #
 # master.cf
 #
 192.168.100.12:smtp inet  n     -     n     -    - smtpd
    -o receive_override_options=no_header_body_checks
 </pre>
-
-<p>
-Note that the second line must start with whitespace to indicate
-that it is a continuation of the previous line. There cannot be
-any spaces between <tt
-class="literal">receive_override_options</tt>, the equals sign,
-and <tt class="literal">no_header_body_checks</tt>. If you
-wanted to make other configuration changes to this instance, you
-can add them in the same way. Otherwise, this instance will use
-the same configuration from <tt class="filename">main.cf</tt>
-other than any of the parameters you override here.
 </p>
 
 <p>
-Also create a similar entry for the loopback address and add the
-same <tt class="literal">no_header_body_checks</tt> feature to
-the <tt class="command">pickup</tt> daemon so that all mail
-submitted locally will also bypass the checks. The entries in
-the <tt class="filename">master.cf</tt> file (including the
-original <tt class="command">smtpd</tt> entry) should look like
-the following:
+Note that the second line must start with whitespace to indicate that it is a
+continuation of the previous line. There cannot be any spaces between
+<code>receive_override_options</code>, the equals sign, and
+<code>no_header_body_checks</code>. If you wanted to make other configuration
+changes to this instance, you can add them in the same way. Otherwise, this
+instance will use the same configuration from <code>main.cf</code> other than
+any of the parameters you override here.
+</p>
+
+<p>
+Also create a similar entry for the loopback address and add the same
+<code>no_header_body_checks</code> feature to the <code>pickup</code> daemon so
+that all mail submitted locally will also bypass the checks. The entries in the
+<code>master.cf</code> file (including the original <code>smtpd</code> entry)
+should look like the following:
 </p>
 
 
-<pre class="programlisting">
+<p>
+<pre class="code">
 smtp                inet  n     -     n     -     -   smtpd
 192.168.100.12:smtp inet  n     -     n     -     -   smtpd
    -o receive_override_options=no_header_body_checks
@@ -169,20 +154,22 @@ smtp                inet  n     -     n     -     -   smtpd
 pickup              fifo  n     -     n    60     1   pickup
    -o receive_override_options=no_header_body_checks
 </pre>
+</p>
 
 <p>
-You will have to stop and start Postfix after making these
-changes. A reload is not enough when adding or changing
-interfaces:
+You will have to stop and start Postfix after making these changes. A reload is
+not enough when adding or changing interfaces:
 </p>
 
 
-<pre class="screen">
+<p>
+<pre class="code">
 # <b>postfix stop</b>
 postfix/postfix-script: stopping the Postfix mail system
 # <b>postfix start</b>
 postfix/postfix-script: starting the Postfix mail system
 </pre>
+</p>
 
 <p>
 Be sure to check your log file to make sure there are no errors.
@@ -192,30 +179,31 @@ Be sure to check your log file to make sure there are no errors.
 Tell your users to set their email clients to use 192.168.100.12
 (or its hostname) as their SMTP server. Then all mail from your
 local network or from the machine itself will skip body and
-header checks configured in <tt class="filename">main.cf</tt>.
+header checks configured in <code>main.cf</code>.
 </p>
 
 <h2>Summary</h2>
 <p>
-Here's a quick summary of the steps to bypass header and body
-checks for internal users:
+Here's a quick summary of the steps to bypass header and body checks for
+internal users:
 </p>
 
 <ol>
-<li>Obtain or identify an IP address to use for internal email
+<li><p>Obtain or identify an IP address to use for internal email
 relaying. Using either a second interface or IP aliasing
 configure your system with the second IP address. Make sure that
-the new address comes up when the system initializes.</li>
-<li>Set the parameter <tt class="literal">inet_interfaces</tt> in
-<tt class="filename">main.cf</tt> so that your original <tt
-class="command">smtpd</tt> does not use your new internal IP
-address.</li>
-<li>Add entries to <tt class="filename">master.cf</tt> for the new
-IP address and for the loopback IP. Include the configuration
-option <tt class="literal">-o
-receive_override_options=no_header_body_checks</tt> to skip body
-and header checks. Also, add the same configuration override to
-the <tt class="command">pickup</tt> daemon to skip the checks.</li>
-<li>Stop and restart Postfix. Check your log file for any problems.</li>
+the new address comes up when the system initializes.</p></li>
+
+<li><p>Set the parameter <code>inet_interfaces</code> in <code>main.cf</code> so
+that your original <code>smtpd</code> does not use your new internal IP
+address.</p></li>
+
+<li><p>Add entries to <code>master.cf</code> for the new IP address and for the
+loopback IP. Include the configuration option <code>-o
+receive_override_options=no_header_body_checks</code> to skip body and header
+checks. Also, add the same configuration override to the <code>pickup</code>
+daemon to skip the checks.</p></li>
+
+<li><p>Stop and restart Postfix. Check your log file for any problems.</p></li>
 </ol>
 </div>
