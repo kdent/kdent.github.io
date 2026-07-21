@@ -19,6 +19,45 @@ directory you just created on your Google drive.</li>
 
 <li>Next, go to <a href="https://colab.research.google.com/">
 https://colab.research.google.com/</a>
-and create a new notebook. Then write the code from the slide in the classroom to confirm that your environment is working correctly.</li>
+and create a new notebook.
+
+<li>Write the Python code in your notebook to
+<ol>
+<li>Open the file</li>
+<li>Count the number of lines in the file</li>
+<li>Print the number of lines</li>
 </ol>
+</ol>
+
+<p>
+If you need help with the code to count the number of lines, click
+the Show Code button.
+</p>
+
+<button id="toggleBtn">Show Code</button>
+
+<div id="hidden-code" style="display:none;">
+<pre><code>f = open('/content/drive/MyDrive/columbia-ml-data/iris.csv', 'r')
+i = 0
+for line in f:
+	i = i + 1 
+print(f"There are {i} lines in the file")
+</code></pre>
+</div>
+
+<script>
+// 1. Select the button and the div elements
+const toggleButton = document.getElementById('toggleBtn');
+const targetDiv = document.getElementById('hidden-code');
+
+// 2. Add a click event listener to the button
+toggleButton.addEventListener('click', function() {
+// 3. Toggle the 'hidden' class on the div
+if (targetDiv.style.display === 'none') {
+    targetDiv.style.display = 'block';
+} else {
+    targetDiv.style.display = 'none';
+}
+});
+</script>
 
